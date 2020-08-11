@@ -1,5 +1,10 @@
 #!/bin/bash
 
+########################################################
+##
+##
+##
+########################################################
 	wrkdir=$PWD
 	converteddir=$(cat `dirname ${0}`/config.json | jq -r '.converteddir')
 	tmpjson=$(cat `dirname ${0}`/config.json | jq -r '.tmpjson')
