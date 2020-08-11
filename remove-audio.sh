@@ -10,8 +10,7 @@ tmpjson="/Volumes/BigDisk/tmp/remove-audio.json"
 	OIFS="$IFS" ## needed for spaces in filenames 
 	IFS=$'\n'
 
-
-	#  Variable to keep a count of the number of files processed
+	# Variable to keep a count of the number of files processed
 	((processed=0))
 
 	# Let's loop through the current directory and process all files
@@ -61,6 +60,8 @@ tmpjson="/Volumes/BigDisk/tmp/remove-audio.json"
 			echo "Source Filesize : ${filesize}"
 			echo "Video Index     : ${videoidx}"
 			echo "Audio Index     : ${audioidx[@]}"
+			
+			#add loop here to build audio map if more than 1 English stream found
 			echo "Audio Index     : ${audioidx[0]}"
 			ffmpeg -hide_banner -loglevel quiet -i $wrkfname -map 0:${videoidx} -map 0:${audioidx[0]} -vcodec copy -acodec copy "${converteddir}/${wrkfname}"
 			
