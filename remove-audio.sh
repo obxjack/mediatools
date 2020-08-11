@@ -1,10 +1,11 @@
 #!/bin/bash
 
-########################################################
-##
-##
-##
-########################################################
+##############################################################
+## Loops through the current directory and using ffprobe    ##
+## identifies which stream(s) have a language type of       ##
+## English. We then use ffmpeg to copy only the video       ##
+## and the English audio streams to the converted directory ##
+##############################################################
 	wrkdir=$PWD
 	converteddir=$(cat `dirname ${0}`/config.json | jq -r '.converteddir')
 	tmpjson=$(cat `dirname ${0}`/config.json | jq -r '.tmpjson')
