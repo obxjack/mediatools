@@ -1,9 +1,8 @@
 #!/bin/bash
 
-wrkdir=$PWD
-converteddir="/Volumes/BigDisk/Converted"
-
-tmpjson="/Volumes/BigDisk/tmp/remove-audio.json"
+	wrkdir=$PWD
+	converteddir=$(cat `dirname ${0}`/config.json | jq -r '.converteddir')
+	tmpjson=$(cat `dirname ${0}`/config.json | jq -r '.tmpjson')
 
 	echo "=========================================================================================="
 
@@ -15,9 +14,9 @@ tmpjson="/Volumes/BigDisk/tmp/remove-audio.json"
 
 	# Let's loop through the current directory and process all files
 	for x in $(ls -1 ${wrkdir}); do # | sed 's/\.[a-z]*//g'); do
-		#wrkfname="${wrkdir}/${x}"
 		wrkfname=$x
-		# Using ffprobe to pull details of the streams in the video file
+
+		# Use ffprobe to pull details of the streams in the video file
 		ffprobe -i "${wrkfname}" -v quiet -print_format json -show_streams -show_private_data > $tmpjson
 		
 		found=0
@@ -53,7 +52,6 @@ tmpjson="/Volumes/BigDisk/tmp/remove-audio.json"
 
 			filesize=$(stat -f%z "$wrkfname")
 			((processed++))
-			#outfname="`basename ${wkrfname}`"
 
 			echo "Input  File     : ${wrkfname}"
 			echo "Output File     : ${converteddir}/${wrkfname}"
